@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrimeService.Tests", "PrimeService.Tests\PrimeService.Tests.csproj", "{03854037-0330-4372-B106-E200AB24CD17}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CancellationTokenPractice", "CancellationTokenPractice\CancellationTokenPractice.csproj", "{B1A54FDE-F66C-4A4A-A51F-3A9D156A84C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{03854037-0330-4372-B106-E200AB24CD17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03854037-0330-4372-B106-E200AB24CD17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03854037-0330-4372-B106-E200AB24CD17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1A54FDE-F66C-4A4A-A51F-3A9D156A84C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1A54FDE-F66C-4A4A-A51F-3A9D156A84C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1A54FDE-F66C-4A4A-A51F-3A9D156A84C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1A54FDE-F66C-4A4A-A51F-3A9D156A84C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
