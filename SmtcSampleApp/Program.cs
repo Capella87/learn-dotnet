@@ -11,22 +11,14 @@ public static class Program
     private static MediaPlayer _mPlayer = null!;
     private static SystemMediaTransportControls _smtc = null!;
 
-
-    public static async Task<int> Main(string[] args)
+    public static async Task Main(string[] args)
     {
-        _mPlayer = new MediaPlayer();
-        _smtc = _mPlayer.SystemMediaTransportControls;
         var sampleMusicFile = new Uri(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), ""));
+        var player = new SmtSampleMediaPlayer(new MediaPlayer());
 
-        _mPlayer.AudioCategory = MediaPlayerAudioCategory.Media;
-        _mPlayer.Source = MediaSource.CreateFromUri(sampleMusicFile);
-        _mPlayer.AutoPlay = true;
-        _mPlayer.Volume = .20;
-        _mPlayer.Play();
-
-        await Task.Delay(Timeout.Infinite);
-
-        return 0;
+        await player.OpenFile(sampleMusicFile);
+        await player.Play();
+        player.Dispose();
     }
 }
 
