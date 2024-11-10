@@ -16,6 +16,11 @@ public class SmtSampleMediaPlayer : IDisposable
     private StorageFile? _currentFile = null;
     private CancellationTokenSource? _playCts = null;
 
+    public CancellationTokenSource? PlayerCancellationTokenSource
+    {
+        get => _playCts;
+    }
+
     public List<Uri> Files { get; set; }
 
     public SmtSampleMediaPlayer(MediaPlayer? player)
@@ -60,12 +65,13 @@ public class SmtSampleMediaPlayer : IDisposable
         // Cancel redundant 'play' tasks
         _playCts?.Cancel();
         _playCts = new CancellationTokenSource();
+        Console.CancelKeyPress += ((sender, eventArgs) => _playCts?.Cancel());
         try
         {
             _mPlayer.Play();
             await WaitForMediaEndedAsync(_playCts.Token);
         }
-        catch (OperationCanceledException ex)
+        catch (OperationCanceledException)
         {
             Console.WriteLine("playing is stopped...");
             _smtc.PlaybackStatus = MediaPlaybackStatus.Stopped;
