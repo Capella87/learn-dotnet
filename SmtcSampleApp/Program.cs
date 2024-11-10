@@ -8,9 +8,6 @@ namespace SmtcSampleApp;
 
 public static class Program
 {
-    private static MediaPlayer _mPlayer = null!;
-    private static SystemMediaTransportControls _smtc = null!;
-
     public static async Task Main(string[] args)
     {
         var sampleMusicFile = new Uri(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), ""));

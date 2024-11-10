@@ -14,6 +14,7 @@ public class SmtSampleMediaPlayer : IDisposable
     private SystemMediaTransportControls _smtc = null!;
     private SystemMediaTransportControlsDisplayUpdater _smtcDisplayUpdater = null!;
     private StorageFile? _currentFile = null;
+    private CancellationTokenSource? _playCts = null;
 
     public List<Uri> Files { get; set; }
 
@@ -55,11 +56,23 @@ public class SmtSampleMediaPlayer : IDisposable
         {
             throw new ArgumentNullException("No file to play.");
         }
-        _mPlayer.Play();
-        await WaitForMediaEndedAsync();
+
+        // Cancel redundant 'play' tasks
+        _playCts?.Cancel();
+        _playCts = new CancellationTokenSource();
+        try
+        {
+            _mPlayer.Play();
+            await WaitForMediaEndedAsync(_playCts.Token);
+        }
+        catch (OperationCanceledException ex)
+        {
+            Console.WriteLine("playing is stopped...");
+            _smtc.PlaybackStatus = MediaPlaybackStatus.Stopped;
+        }
     }
 
-    internal async Task<bool> WaitForMediaEndedAsync()
+    internal async Task<bool> WaitForMediaEndedAsync(CancellationToken ct)
     {
         var ts = new TaskCompletionSource<bool>();
 
@@ -71,7 +84,10 @@ public class SmtSampleMediaPlayer : IDisposable
         }
 
         _mPlayer.MediaEnded += OnMediaEnded;
-        return await ts.Task;
+        using (ct.Register(() => ts.SetCanceled()))
+        {
+            return await ts.Task;
+        }
     }
 
     internal async void SmtcButtonPressed(SystemMediaTransportControls sender
